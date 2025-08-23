@@ -18,11 +18,11 @@ int main() {
     struct Territorio planeta[MAX_TERRITORIO];
     int totalTerritorios = 0;
 
-    printf("=======================================");
-    printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO");
-    printf("=======================================");
+    printf("======================================= \n");
+    printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO \n");
+    printf("======================================= \n");
 
-    for (int i = 5; i > 0; i--) {
-
+    for (int i = 1; i <= 5; i++) {
+        printf("CADASTRO DO TERRITORIO %d\n", i);
     }
 }
