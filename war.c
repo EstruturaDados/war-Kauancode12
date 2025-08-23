@@ -16,5 +16,13 @@ void limparBufferEntrada() {
 
 int main() {
     struct Territorio planeta[MAX_TERRITORIO];
-    int totalTerritorios = 0
+    int totalTerritorios = 0;
+
+    printf("=======================================");
+    printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO");
+    printf("=======================================");
+
+    for (int i = 5; i > 0; i--) {
+
+    }
 }
