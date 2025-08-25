@@ -44,5 +44,12 @@ int main() {
         printf("CADASTRO DOS TERRITORIOS CONCLUIDOS \n");
         printf("=================================== \n");
 
-        
+    for (int i = 0; i < 5; i++) {
+        printf("Territorio %d: \n", i + 1);
+        printf("Nome: %s\n", planeta[i].nome);
+        printf("Cor do exercito: %s\n", planeta[i].cor);
+        printf("Quantidade de tropas: %d\n", planeta[i].tropas);
+    }
+
+    return 0;
 }
