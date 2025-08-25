@@ -22,7 +22,27 @@ int main() {
     printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO \n");
     printf("======================================= \n");
 
-    for (int i = 1; i <= 5; i++) {
-        printf("CADASTRO DO TERRITORIO %d\n", i);
+    for (int i = 0; i < 5; i++) {
+        printf("CADASTRO DO TERRITORIO %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(planeta[i].nome, 30, stdin);
+
+        printf("Cor do exercito: ");
+        fgets(planeta[i].cor, 10, stdin);
+
+        planeta[i].nome[strcspn(planeta[i].nome, "\n")] = '\0';
+        planeta[i].cor[strcspn(planeta[i].cor, "\n")] = '\0';
+
+        printf("Quantidade de tropas: ");
+        scanf("%d", &planeta[i].tropas);
+        limparBufferEntrada();
+
     }
+
+        printf("=================================== \n");
+        printf("CADASTRO DOS TERRITORIOS CONCLUIDOS \n");
+        printf("=================================== \n");
+
+        
 }
