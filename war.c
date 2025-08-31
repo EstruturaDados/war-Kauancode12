@@ -1,14 +1,34 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define MAX_TERRITORIO 5
 
 // DEFINE A struct
-struct Territorio {
+typedef struct  {
     char nome[30];
     char cor[10];
     int tropas;
-};
+} Territorio;
+
+void simularAtaque(Territorio *atacante, Territorio * defensor) {
+    int dadoAtq = (rand() %6) + 1;
+
+    int dadoDef = (rand() %6) + 1;
+
+    printf("\n%s ataca %s\n", atacante->nome, defensor->nome);
+    printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
+
+    if (dadoAtq > dadoDef) {
+        defensor->tropas--;
+        printf("Defensor perdeu uma tropa\n");
+    } else {
+        atacante->tropas--;
+        printf("Atacante perdeu uma tropa\n");
+    }
+
+}
 // CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
 void limparBufferEntrada() {
     int c;
@@ -16,7 +36,8 @@ void limparBufferEntrada() {
 }
 // FUNÇÃO PRINCIPAL
 int main() {
-    struct Territorio planeta[MAX_TERRITORIO];
+    int n;
+    Territorio *planeta = (Territorio*) calloc(n, sizeof(Territorio));
     int totalTerritorios = 0;
     
     // ENTRADA DE DADOS COM printf
