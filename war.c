@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_TERRITORIO 5
-
 // DEFINE A struct
 typedef struct  {
     char nome[30];
@@ -26,7 +24,7 @@ void simularAtaque(Territorio *atacante, Territorio * defensor) {
     } else {
         atacante->tropas--;
         printf("Atacante perdeu uma tropa\n");
-    }
+    }    
 
 }
 // CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
@@ -34,19 +32,30 @@ void limparBufferEntrada() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
+
 // FUNÇÃO PRINCIPAL
 int main() {
+    int opcao;
     int n;
-    Territorio *planeta = (Territorio*) calloc(n, sizeof(Territorio));
-    int totalTerritorios = 0;
+    printf("Quantos territorios deseja cadastrar?: ");
+    scanf("%d", &n);
+    limparBufferEntrada();
+
+    Territorio *planeta;
+    planeta = (Territorio*) calloc(n, sizeof(Territorio));
     
+    if (planeta == NULL) {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+ 
     // ENTRADA DE DADOS COM printf
-    printf("======================================= \n");
+    printf("\n======================================= \n");
     printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO \n");
     printf("======================================= \n");
     
     // LOOP for PARA SAIDA DE DADOS NO CONSOLE COM printf, PERGUNTA E GUARDA AS INFORMAÇÕES DOS TERRITORIOS
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < n; i++) {
         printf("\nCADASTRO DO TERRITORIO %d\n", i + 1);
 
         printf("Nome: ");
@@ -75,6 +84,8 @@ int main() {
         printf("Cor do exercito: %s\n", planeta[i].cor);
         printf("Quantidade de tropas: %d\n", planeta[i].tropas);
     }
+
+
 
     return 0;
 }
