@@ -10,7 +10,7 @@ typedef struct  {
     int tropas;
 } Territorio;
 
-void simularAtaque(Territorio *atacante, Territorio * defensor) {
+void atacar(Territorio *atacante, Territorio * defensor) {
     int dadoAtq = (rand() %6) + 1;
 
     int dadoDef = (rand() %6) + 1;
@@ -18,13 +18,19 @@ void simularAtaque(Territorio *atacante, Territorio * defensor) {
     printf("\n%s ataca %s\n", atacante->nome, defensor->nome);
     printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
 
-    if (dadoAtq > dadoDef) {
+    if (dadoAtq >= dadoDef) {
         defensor->tropas--;
         printf("Defensor perdeu uma tropa\n");
     } else {
         atacante->tropas--;
         printf("Atacante perdeu uma tropa\n");
-    }    
+    }
+
+    if (defensor->tropas <= 0) {
+        printf("%s Foi conquistado pelo exercito %s\n", defensor->nome, atacante->cor);
+        defensor->tropas = 1;
+        strcpy(defensor->cor, atacante->cor);
+    }
 
 }
 // CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
@@ -35,6 +41,8 @@ void limparBufferEntrada() {
 
 // FUNÇÃO PRINCIPAL
 int main() {
+    srand(time(NULL));
+
     int opcao;
     int n;
     printf("Quantos territorios deseja cadastrar?: ");
@@ -77,15 +85,35 @@ int main() {
         printf("CADASTRO DOS TERRITORIOS CONCLUIDOS \n");
         printf("=================================== \n");
 
-    // EXIBE AS INFORMAÇÕES DOS TERRITORIOS APÓS O CADASTRO
-    for (int i = 0; i < 5; i++) {
-        printf("\nTerritorio %d: \n", i + 1);
-        printf("Nome: %s\n", planeta[i].nome);
-        printf("Cor do exercito: %s\n", planeta[i].cor);
-        printf("Quantidade de tropas: %d\n", planeta[i].tropas);
-    }
+    do {
+        printf("\n==Territorios==\n");
+        for (int i = 0; i < n; i++) {
+            printf("%d - %s (%d tropas do exercito %s)\n", i + 1, planeta[i].nome, planeta[i].tropas, planeta[i].cor);
+        }
 
+        printf("\nEscolha o atacante (1 a %d ou 0 para sair): ", n);
+        scanf("%d", &opcao);
+        if (opcao == 0) break;
+        int atq = opcao - 1;
 
+        printf("\nEscolha o defensor (1 a %d ou 0 para sair): ", n);
+        scanf("%d", &opcao);
+        if (opcao == 0) break;
+        int def = opcao - 1;
+        
+        if (atq < 0 || atq >= n || def < 0 || def >= n || atq == def) {
+            printf("Escolha invalida\n");
+            continue;
+        }
+
+        atacar(&planeta[atq], &planeta[def]);
+
+        printf("Status: %s (%d tropas) x %s (%d tropas)\n", planeta[atq].nome, planeta[atq].tropas, planeta[def].nome, planeta[def].tropas);
+
+    } while (1);
+
+    free(planeta);
+    printf("Programa encerrado. \n");
 
     return 0;
 }
