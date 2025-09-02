@@ -3,13 +3,14 @@
 #include <stdlib.h>
 #include <time.h>
 
-// DEFINE A struct
+// DEFINE A STRUCT
 typedef struct  {
     char nome[30];
     char cor[10];
     int tropas;
 } Territorio;
 
+// FUNÇÃO QUE SIMULA UM ATAQUE COM TODAS AS REGRAS
 void atacar(Territorio *atacante, Territorio *defensor) {
     int dadoAtq = (rand() %6) + 1;
 
@@ -45,13 +46,17 @@ int main() {
 
     int opcao;
     int n;
+
+    // PERGUNTA O NÚMERO DE TERRITORIOS E GUARDA NA VARIAVEL n QUE SERÁ USADA 
+    // DENTRO DO calloc PARA ALOCAR MEMORIA PARA ACOMODAR OS "N" TERRITORIOS
     printf("Quantos territorios deseja cadastrar?: ");
     scanf("%d", &n);
     limparBufferEntrada();
 
-    Territorio *planeta;
-    planeta = (Territorio*) calloc(n, sizeof(Territorio));
+    Territorio *planeta;//declara ponteiro
+    planeta = (Territorio*) calloc(n, sizeof(Territorio));//aloca memoria para guardar os territorios conforme o n
     
+    // VALIDA A ALOCAÇÃO DE MEMORIA
     if (planeta == NULL) {
         printf("Erro ao alocar memoria.\n");
         return 1;
@@ -65,7 +70,8 @@ int main() {
     // LOOP for PARA SAIDA DE DADOS NO CONSOLE COM printf, PERGUNTA E GUARDA AS INFORMAÇÕES DOS TERRITORIOS
     for (int i = 0; i < n; i++) {
         printf("\nCADASTRO DO TERRITORIO %d\n", i + 1);
-
+        
+        // Pergunta nome, cor do exercito e quantidade de tropas para o usuario cadastrar os territorios
         printf("Nome: ");
         fgets(planeta[i].nome, 30, stdin);
 
@@ -85,6 +91,7 @@ int main() {
         printf("CADASTRO DOS TERRITORIOS CONCLUIDOS \n");
         printf("=================================== \n");
 
+    // LOOP for QUE PERGUNTA AO USUARIO O ATACANTE E O DEFENSOR, COM FUNÇÕES DE VALIDAÇÃO DE ESCOLHAS
     do {
         printf("\n==Territorios==\n");
         for (int i = 0; i < n; i++) {
@@ -101,6 +108,7 @@ int main() {
         if (opcao == 0) break;
         int def = opcao - 1;
         
+        //funções de segurança
         if (atq < 0 || atq >= n || def < 0 || def >= n || atq == def) {
             printf("Escolha invalida\n");
             continue;
@@ -111,11 +119,13 @@ int main() {
             continue;
         }
 
+        //função que bloqueia o atacante de atacar um territorio de sua posse
         if (strcmp(planeta[atq].cor, planeta[def].cor) == 0) {
             printf("Voce não pode atacar um territorio que já conquistou\n");
             continue;
         }
 
+        //chama a função que simula a fase de ataque
         atacar(&planeta[atq], &planeta[def]);
 
         printf("Status: %s (%d tropas) x %s (%d tropas)\n", planeta[atq].nome, planeta[atq].tropas, planeta[def].nome, planeta[def].tropas);
@@ -125,6 +135,8 @@ int main() {
 
     } while (1);
 
+    // função free usada para liberar memoria anteriormente alocada por calloc
+    // isso evita vazamento de memoria
     free(planeta);
     printf("Programa encerrado. \n");
 
