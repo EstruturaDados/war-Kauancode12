@@ -10,7 +10,7 @@ typedef struct  {
     int tropas;
 } Territorio;
 
-void atacar(Territorio *atacante, Territorio * defensor) {
+void atacar(Territorio *atacante, Territorio *defensor) {
     int dadoAtq = (rand() %6) + 1;
 
     int dadoDef = (rand() %6) + 1;
@@ -103,6 +103,16 @@ int main() {
         
         if (atq < 0 || atq >= n || def < 0 || def >= n || atq == def) {
             printf("Escolha invalida\n");
+            continue;
+        }
+
+        if (planeta[atq].tropas <= 1) {
+            printf("Voce não pode atacar com apenas 1 tropa\n");
+            continue;
+        }
+
+        if (strcmp(planeta[atq].cor, planeta[def].cor) == 0) {
+            printf("Voce não pode atacar um territorio que já conquistou\n");
             continue;
         }
 
