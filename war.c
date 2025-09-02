@@ -119,6 +119,9 @@ int main() {
         atacar(&planeta[atq], &planeta[def]);
 
         printf("Status: %s (%d tropas) x %s (%d tropas)\n", planeta[atq].nome, planeta[atq].tropas, planeta[def].nome, planeta[def].tropas);
+        printf("Pressione Enter para prosseguir...");
+        limparBufferEntrada();
+        getchar();
 
     } while (1);
 
