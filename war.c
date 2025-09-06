@@ -10,35 +10,8 @@ typedef struct  {
     int tropas;
 } Territorio;
 
-// FUNÇÃO QUE SIMULA UM ATAQUE COM TODAS AS REGRAS
-void atacar(Territorio *atacante, Territorio *defensor) {
-    int dadoAtq = (rand() %6) + 1;
-
-    int dadoDef = (rand() %6) + 1;
-
-    printf("\n%s ataca %s\n", atacante->nome, defensor->nome);
-    printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
-
-    if (dadoAtq >= dadoDef) {
-        defensor->tropas--;
-        printf("Defensor perdeu uma tropa\n");
-    } else {
-        atacante->tropas--;
-        printf("Atacante perdeu uma tropa\n");
-    }
-
-    if (defensor->tropas <= 0) {
-        printf("%s Foi conquistado pelo exercito %s\n", defensor->nome, atacante->cor);
-        defensor->tropas = 1;
-        strcpy(defensor->cor, atacante->cor);
-    }
-
-}
-// CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
-void limparBufferEntrada() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
+void atacar();
+void limparBufferEntrada();
 
 // FUNÇÃO PRINCIPAL
 int main() {
@@ -141,4 +114,35 @@ int main() {
     printf("Programa encerrado. \n");
 
     return 0;
+}
+
+// CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// FUNÇÃO QUE SIMULA UM ATAQUE COM TODAS AS REGRAS
+void atacar(Territorio *atacante, Territorio *defensor) {
+    int dadoAtq = (rand() %6) + 1;
+
+    int dadoDef = (rand() %6) + 1;
+
+    printf("\n%s ataca %s\n", atacante->nome, defensor->nome);
+    printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
+
+    if (dadoAtq >= dadoDef) {
+        defensor->tropas--;
+        printf("Defensor perdeu uma tropa\n");
+    } else {
+        atacante->tropas--;
+        printf("Atacante perdeu uma tropa\n");
+    }
+
+    if (defensor->tropas <= 0) {
+        printf("%s Foi conquistado pelo exercito %s\n", defensor->nome, atacante->cor);
+        defensor->tropas = 1;
+        strcpy(defensor->cor, atacante->cor);
+    }
+
 }
