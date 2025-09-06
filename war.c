@@ -10,8 +10,9 @@ typedef struct  {
     int tropas;
 } Territorio;
 
-void atacar();
+void cadastrar (Territorio *planeta, int n);
 void limparBufferEntrada();
+void atacar();
 void jogar(Territorio *planeta, int n, int opcao);
 
 // FUNÇÃO PRINCIPAL
@@ -36,12 +37,29 @@ int main() {
         return 1;
     }
  
+    
+    
+    // função free usada para liberar memoria anteriormente alocada por calloc
+    // isso evita vazamento de memoria
+    free(planeta);
+    printf("Programa encerrado. \n");
+
+    return 0;
+}
+
+// CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// LOOP for PARA SAIDA DE DADOS NO CONSOLE COM printf, PERGUNTA E GUARDA AS INFORMAÇÕES DOS TERRITORIOS
+void cadastrar (Territorio *planeta, int n) {
     // ENTRADA DE DADOS COM printf
     printf("\n======================================= \n");
     printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO \n");
     printf("======================================= \n");
-    
-    // LOOP for PARA SAIDA DE DADOS NO CONSOLE COM printf, PERGUNTA E GUARDA AS INFORMAÇÕES DOS TERRITORIOS
+       
     for (int i = 0; i < n; i++) {
         printf("\nCADASTRO DO TERRITORIO %d\n", i + 1);
         
@@ -65,20 +83,6 @@ int main() {
         printf("CADASTRO DOS TERRITORIOS CONCLUIDOS \n");
         printf("=================================== \n");
 
-    
-
-    // função free usada para liberar memoria anteriormente alocada por calloc
-    // isso evita vazamento de memoria
-    free(planeta);
-    printf("Programa encerrado. \n");
-
-    return 0;
-}
-
-// CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
-void limparBufferEntrada() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
 }
 
 // FUNÇÃO QUE SIMULA UM ATAQUE COM TODAS AS REGRAS
