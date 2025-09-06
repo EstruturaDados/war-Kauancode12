@@ -12,6 +12,7 @@ typedef struct  {
 
 void cadastrar (Territorio *planeta, int n);
 void limparBufferEntrada();
+void exibirMenu();
 void atacar();
 void jogar(Territorio *planeta, int n, int opcao);
 
@@ -53,13 +54,20 @@ void limparBufferEntrada() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+void exibirMenu() {
+    printf("====== Jogo War ======\n");
+    printf("1 - Jogar\n");
+    printf("2 - Verificar missão\n");
+    printf("0 - Sair");
+}
+
 // LOOP for PARA SAIDA DE DADOS NO CONSOLE COM printf, PERGUNTA E GUARDA AS INFORMAÇÕES DOS TERRITORIOS
 void cadastrar (Territorio *planeta, int n) {
     // ENTRADA DE DADOS COM printf
     printf("\n======================================= \n");
     printf("CADASTRANDO TERRITORIOS PARA O SEU JOGO \n");
     printf("======================================= \n");
-       
+
     for (int i = 0; i < n; i++) {
         printf("\nCADASTRO DO TERRITORIO %d\n", i + 1);
         
