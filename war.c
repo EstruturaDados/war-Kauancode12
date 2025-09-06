@@ -12,6 +12,7 @@ typedef struct  {
 
 void atacar();
 void limparBufferEntrada();
+void jogar(Territorio *planeta, int n, int opcao);
 
 // FUNÇÃO PRINCIPAL
 int main() {
@@ -64,8 +65,50 @@ int main() {
         printf("CADASTRO DOS TERRITORIOS CONCLUIDOS \n");
         printf("=================================== \n");
 
-    // LOOP for QUE PERGUNTA AO USUARIO O ATACANTE E O DEFENSOR, COM FUNÇÕES DE VALIDAÇÃO DE ESCOLHAS
-    do {
+    
+
+    // função free usada para liberar memoria anteriormente alocada por calloc
+    // isso evita vazamento de memoria
+    free(planeta);
+    printf("Programa encerrado. \n");
+
+    return 0;
+}
+
+// CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// FUNÇÃO QUE SIMULA UM ATAQUE COM TODAS AS REGRAS
+void atacar(Territorio *atacante, Territorio *defensor) {
+    int dadoAtq = (rand() %6) + 1;
+
+    int dadoDef = (rand() %6) + 1;
+
+    printf("\n%s ataca %s\n", atacante->nome, defensor->nome);
+    printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
+
+    if (dadoAtq >= dadoDef) {
+        defensor->tropas--;
+        printf("Defensor perdeu uma tropa\n");
+    } else {
+        atacante->tropas--;
+        printf("Atacante perdeu uma tropa\n");
+    }
+
+    if (defensor->tropas <= 0) {
+        printf("%s Foi conquistado pelo exercito %s\n", defensor->nome, atacante->cor);
+        defensor->tropas = 1;
+        strcpy(defensor->cor, atacante->cor);
+    }
+
+}
+
+// LOOP for QUE PERGUNTA AO USUARIO O ATACANTE E O DEFENSOR, COM FUNÇÕES DE VALIDAÇÃO DE ESCOLHAS
+void jogar(Territorio *planeta, int n, int opcao) {
+     do {
         printf("\n==Territorios==\n");
         for (int i = 0; i < n; i++) {
             printf("%d - %s (%d tropas do exercito %s)\n", i + 1, planeta[i].nome, planeta[i].tropas, planeta[i].cor);
@@ -107,42 +150,4 @@ int main() {
         getchar();
 
     } while (1);
-
-    // função free usada para liberar memoria anteriormente alocada por calloc
-    // isso evita vazamento de memoria
-    free(planeta);
-    printf("Programa encerrado. \n");
-
-    return 0;
-}
-
-// CÓDIGO PARA LIMPAR O BUFFER EVITANDO ERROS COM scanf
-void limparBufferEntrada() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
-// FUNÇÃO QUE SIMULA UM ATAQUE COM TODAS AS REGRAS
-void atacar(Territorio *atacante, Territorio *defensor) {
-    int dadoAtq = (rand() %6) + 1;
-
-    int dadoDef = (rand() %6) + 1;
-
-    printf("\n%s ataca %s\n", atacante->nome, defensor->nome);
-    printf("Dado atacante: %d | Dado defensor: %d\n", dadoAtq, dadoDef);
-
-    if (dadoAtq >= dadoDef) {
-        defensor->tropas--;
-        printf("Defensor perdeu uma tropa\n");
-    } else {
-        atacante->tropas--;
-        printf("Atacante perdeu uma tropa\n");
-    }
-
-    if (defensor->tropas <= 0) {
-        printf("%s Foi conquistado pelo exercito %s\n", defensor->nome, atacante->cor);
-        defensor->tropas = 1;
-        strcpy(defensor->cor, atacante->cor);
-    }
-
 }
